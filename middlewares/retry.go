@@ -84,9 +84,9 @@ func Retry(config *config.Config) echo.MiddlewareFunc {
 				}
 				retryFailed := statusFromMsgRetry == 502 || c.Response().Status == http.StatusNotFound || c.Response().Status == http.StatusForbidden
 				if retryFailed {
-					c.Logger().Infof("Retry attempt http status: %d, code found in body: %d", c.Response().Status, statusFromMsgRetry)
+					c.Logger().Infof("Retry attempt failed, http status: %d, code found in body: %d", c.Response().Status, statusFromMsgRetry)
 				} else {
-					c.Logger().Infof("Retry attempt succeeded with http status: %d, code found in body: %d", c.Response().Status, statusFromMsgRetry)
+					c.Logger().Infof("Retry attempt succeeded, http status: %d, code found in body: %d", c.Response().Status, statusFromMsgRetry)
 				}
 			}
 
