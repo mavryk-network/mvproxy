@@ -3,8 +3,8 @@ package config
 var defaultConfig = &ConfigFile{
 	DevMode:        false,
 	Host:           "0.0.0.0:8080",
-	TezosHost:      []string{"127.0.0.1:8732"},
-	TezosHostRetry: "",
+	MavrykHost:      []string{"127.0.0.1:8732"},
+	MavrykHostRetry: "",
 	Redis: Redis{
 		Host:    "",
 		Enabled: false,

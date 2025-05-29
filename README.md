@@ -1,6 +1,6 @@
 # MvProxy
 
-MvProxy is a reverse proxy specifically designed for Tezos nodes, offering a range of features that enhance node performance, security, and manageability.
+MvProxy is a reverse proxy specifically designed for Mavryk nodes, offering a range of features that enhance node performance, security, and manageability.
 
 ## Features
 
@@ -16,9 +16,9 @@ MvProxy is a reverse proxy specifically designed for Tezos nodes, offering a ran
 
 ## How to run
 
-Make sure that your Tezos Node is running and set its host address in the `tezos_host` configuration.
+Make sure that your Mavryk Node is running and set its host address in the `mavryk_host` configuration.
 
-If you want to test only MvProxy without a real Tezos Node, you can simulate a Tezos Node with our `flextesa.sh` script. Make sure that you have a docker.
+If you want to test only MvProxy without a real Mavryk Node, you can simulate a Mavryk Node with our `flextesa.sh` script. Make sure that you have a docker.
 
 ```bash
 ./flextesa.sh
@@ -124,9 +124,9 @@ rate_limit:
 redis:
     enabled: false
     host: ""
-tezos_host:
+mavryk_host:
     - 127.0.0.1:8732
-tezos_host_retry: ""
+mavryk_host_retry: ""
 ```
 
 ### Environment Variables
@@ -135,8 +135,8 @@ You can also configure or overwrite MvProxy with environment variables, using th
 
 - `MVPROXY_DEV_MODE` is a flag to enable dev features like pretty logger.
 - `MVPROXY_HOST` is the host of the proxy.
-- `MVPROXY_TEZOS_HOST` are the hosts of the tezos nodes.
-- `MVPROXY_TEZOS_HOST_RETRY` is the host used when finding a 404 or 410. It's recommended use full or archive nodes.
+- `MVPROXY_MAVRYK_HOST` are the hosts of the mavryk nodes.
+- `MVPROXY_MAVRYK_HOST_RETRY` is the host used when finding a 404 or 410. It's recommended use full or archive nodes.
 - `MVPROXY_REDIS_HOST` is the host of the redis.
 - `MVPROXY_REDIS_ENABLE` is a flag to enable redis.
 - `MVPROXY_LOAD_BALANCER_TTL` is the time to live to keep using the same node by user IP.
@@ -151,10 +151,10 @@ You can also configure or overwrite MvProxy with environment variables, using th
 - `MVPROXY_RATE_LIMIT_MAX` is the max of requests permitted in a period.
 - `MVPROXY_DENY_IPS_ENABLED` is a flag to block IP addresses.
 - `MVPROXY_DENY_IPS_VALUES` is the IP Address that will be blocked on the proxy.
-- `MVPROXY_DENY_ROUTES_ENABLED` is a flag to block the Tezos node's routes. 
-- `MVPROXY_DENY_ROUTES_VALUES` is the Tezos nodes routes that will be blocked on the proxy.conf.
-- `MVPROXY_ALLOW_ROUTES_ENABLED` is a flag to allow the Tezos node's routes. 
-- `MVPROXY_ALLOW_ROUTES_VALUES` is the Tezos nodes routes that will be allowed on the proxy.conf.
+- `MVPROXY_DENY_ROUTES_ENABLED` is a flag to block the Mavryk node's routes. 
+- `MVPROXY_DENY_ROUTES_VALUES` is the Mavryk nodes routes that will be blocked on the proxy.conf.
+- `MVPROXY_ALLOW_ROUTES_ENABLED` is a flag to allow the Mavryk node's routes. 
+- `MVPROXY_ALLOW_ROUTES_VALUES` is the Mavryk nodes routes that will be allowed on the proxy.conf.
 - `MVPROXY_METRICS_ENABLED` is the flag to enable metrics.
 - `MVPROXY_METRICS_PPROF` is the flag to enable pprof.
 - `MVPROXY_METRICS_HOST` is the host of the prometheus metrics and pprof (if enabled).

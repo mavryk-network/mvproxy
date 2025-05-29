@@ -18,7 +18,7 @@ var statusCodeRegex = regexp.MustCompile(`code=(\d+)`)
 func Retry(config *config.Config) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) (err error) {
-			if config.ConfigFile.TezosHostRetry == "" ||
+			if config.ConfigFile.MavrykHostRetry == "" ||
 				strings.Contains(c.Request().URL.Path, "mempool") ||
 				strings.Contains(c.Request().URL.Path, "monitor") {
 				return next(c)

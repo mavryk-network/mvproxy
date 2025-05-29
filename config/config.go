@@ -30,10 +30,10 @@ func NewConfig() *Config {
 
 	var targets = []*middleware.ProxyTarget{}
 	var retryTarget *middleware.ProxyTarget = nil
-	if configFile.TezosHostRetry != "" {
-		retryTarget = hostToTarget(configFile.TezosHostRetry)
+	if configFile.MavrykHostRetry != "" {
+		retryTarget = hostToTarget(configFile.MavrykHostRetry)
 	}
-	for _, host := range configFile.TezosHost {
+	for _, host := range configFile.MavrykHost {
 		targets = append(targets, hostToTarget(host))
 	}
 
@@ -49,7 +49,7 @@ func NewConfig() *Config {
 	proxyConfig := middleware.ProxyConfig{
 		Skipper:    middleware.DefaultSkipper,
 		ContextKey: "target",
-		RetryCount: len(configFile.TezosHost) + 1,
+		RetryCount: len(configFile.MavrykHost) + 1,
 		Balancer:   balancer,
 		RetryFilter: func(c echo.Context, err error) bool {
 			if httpErr, ok := err.(*echo.HTTPError); ok {

@@ -104,6 +104,6 @@ type ConfigFile struct {
 	CORS           CORS         `mapstructure:"cors"`
 	GZIP           GZIP         `mapstructure:"gzip"`
 	Host           string       `mapstructure:"host"`
-	TezosHost      []string     `mapstructure:"tezos_host"`
-	TezosHostRetry string       `mapstructure:"tezos_host_retry"`
+	MavrykHost      []string     `mapstructure:"mavryk_host"`
+	MavrykHostRetry string       `mapstructure:"mavryk_host_retry"`
 }

@@ -76,6 +76,6 @@ rate_limit:
 redis:
     enabled: false
     host: ""
-tezos_host:
+mavryk_host:
     - 127.0.0.1:8732
-tezos_host_retry: ""
+mavryk_host_retry: ""

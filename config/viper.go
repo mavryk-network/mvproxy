@@ -32,8 +32,8 @@ func initViper() *ConfigFile {
 	// Set default values for configuration
 	viper.SetDefault("dev_mode", false)
 	viper.SetDefault("host", defaultConfig.Host)
-	viper.SetDefault("tezos_host", defaultConfig.TezosHost)
-	viper.SetDefault("tezos_host_retry", defaultConfig.TezosHostRetry)
+	viper.SetDefault("mavryk_host", defaultConfig.MavrykHost)
+	viper.SetDefault("mavryk_host_retry", defaultConfig.MavrykHostRetry)
 	viper.SetDefault("redis.host", defaultConfig.Redis.Host)
 	viper.SetDefault("redis.enabled", defaultConfig.Redis.Enabled)
 	viper.SetDefault("load_balancer.ttl", defaultConfig.LoadBalancer.TTL)
