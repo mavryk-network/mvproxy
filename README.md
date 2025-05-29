@@ -1,6 +1,6 @@
-# TzProxy
+# MvProxy
 
-TzProxy is a reverse proxy specifically designed for Tezos nodes, offering a range of features that enhance node performance, security, and manageability.
+MvProxy is a reverse proxy specifically designed for Tezos nodes, offering a range of features that enhance node performance, security, and manageability.
 
 ## Features
 
@@ -18,17 +18,17 @@ TzProxy is a reverse proxy specifically designed for Tezos nodes, offering a ran
 
 Make sure that your Tezos Node is running and set its host address in the `tezos_host` configuration.
 
-If you want to test only TzProxy without a real Tezos Node, you can simulate a Tezos Node with our `flextesa.sh` script. Make sure that you have a docker.
+If you want to test only MvProxy without a real Tezos Node, you can simulate a Tezos Node with our `flextesa.sh` script. Make sure that you have a docker.
 
 ```bash
 ./flextesa.sh
 ```
 
-If you want custom configurations, create a file named as `tzproxy.yaml` in the same directory of the binary. This file will be created if you don't create it.
+If you want custom configurations, create a file named as `mvproxy.yaml` in the same directory of the binary. This file will be created if you don't create it.
 
-Then, just [download the binary](https://github.com/marigold-dev/tzproxy/releases) and run it:
+Then, just [download the binary](https://github.com/mavryk-network/mvproxy/releases) and run it:
 ```bash
-./tzproxy
+./mvproxy
 ```
 
 Finally, test it with:
@@ -39,7 +39,7 @@ curl http://localhost:8080/chains/main/blocks/head/header
 ## Configuration
 
 ### Yaml File
-Here a default `tzproxy.yaml` file:
+Here a default `mvproxy.yaml` file:
 
 ```yaml
 allow_routes:
@@ -131,35 +131,35 @@ tezos_host_retry: ""
 
 ### Environment Variables
 
-You can also configure or overwrite TzProxy with environment variables, using the same structure:
+You can also configure or overwrite MvProxy with environment variables, using the same structure:
 
-- `TZPROXY_DEV_MODE` is a flag to enable dev features like pretty logger.
-- `TZPROXY_HOST` is the host of the proxy.
-- `TZPROXY_TEZOS_HOST` are the hosts of the tezos nodes.
-- `TZPROXY_TEZOS_HOST_RETRY` is the host used when finding a 404 or 410. It's recommended use full or archive nodes.
-- `TZPROXY_REDIS_HOST` is the host of the redis.
-- `TZPROXY_REDIS_ENABLE` is a flag to enable redis.
-- `TZPROXY_LOAD_BALANCER_TTL` is the time to live to keep using the same node by user IP.
-- `TZPROXY_LOGGER_BUNCH_SIZE` is the bunch size of the logger.
-- `TZPROXY_LOGGER_POOL_INTERVAL_SECONDS` is the pool interval of the logger.
-- `TZPROXY_CACHE_ENABLED` is the flag to cache enable cache.
-- `TZPROXY_CACHE_DISABLED_ROUTES` is the variable with the routes to cache.
-- `TZPROXY_CACHE_SIZE_MB` is the size of the cache in megabytes.
-- `TZPROXY_CACHE_TTL` is the time to live in seconds for cache.
-- `TZPROXY_RATE_LIMIT_ENABLED` is a flag to enable rate limiting.
-- `TZPROXY_RATE_LIMIT_MINUTES` is the minutes of the period of rate limiting. 
-- `TZPROXY_RATE_LIMIT_MAX` is the max of requests permitted in a period.
-- `TZPROXY_DENY_IPS_ENABLED` is a flag to block IP addresses.
-- `TZPROXY_DENY_IPS_VALUES` is the IP Address that will be blocked on the proxy.
-- `TZPROXY_DENY_ROUTES_ENABLED` is a flag to block the Tezos node's routes. 
-- `TZPROXY_DENY_ROUTES_VALUES` is the Tezos nodes routes that will be blocked on the proxy.conf.
-- `TZPROXY_ALLOW_ROUTES_ENABLED` is a flag to allow the Tezos node's routes. 
-- `TZPROXY_ALLOW_ROUTES_VALUES` is the Tezos nodes routes that will be allowed on the proxy.conf.
-- `TZPROXY_METRICS_ENABLED` is the flag to enable metrics.
-- `TZPROXY_METRICS_PPROF` is the flag to enable pprof.
-- `TZPROXY_METRICS_HOST` is the host of the prometheus metrics and pprof (if enabled).
-- `TZPROXY_CORS_ENABLED` is the flag to enable cors.
-- `TZPROXY_GZIP_ENABLED` is the flag to enable gzip.
-- `TZPROXY_GC_OPTIMIZE_MEMORY_STORE` is a flag to optimize GC when it's using storage as memory allocations instead of redis.
-- `TZPROXY_GC_PERCENT` is the percent of the garbage collector.
+- `MVPROXY_DEV_MODE` is a flag to enable dev features like pretty logger.
+- `MVPROXY_HOST` is the host of the proxy.
+- `MVPROXY_TEZOS_HOST` are the hosts of the tezos nodes.
+- `MVPROXY_TEZOS_HOST_RETRY` is the host used when finding a 404 or 410. It's recommended use full or archive nodes.
+- `MVPROXY_REDIS_HOST` is the host of the redis.
+- `MVPROXY_REDIS_ENABLE` is a flag to enable redis.
+- `MVPROXY_LOAD_BALANCER_TTL` is the time to live to keep using the same node by user IP.
+- `MVPROXY_LOGGER_BUNCH_SIZE` is the bunch size of the logger.
+- `MVPROXY_LOGGER_POOL_INTERVAL_SECONDS` is the pool interval of the logger.
+- `MVPROXY_CACHE_ENABLED` is the flag to cache enable cache.
+- `MVPROXY_CACHE_DISABLED_ROUTES` is the variable with the routes to cache.
+- `MVPROXY_CACHE_SIZE_MB` is the size of the cache in megabytes.
+- `MVPROXY_CACHE_TTL` is the time to live in seconds for cache.
+- `MVPROXY_RATE_LIMIT_ENABLED` is a flag to enable rate limiting.
+- `MVPROXY_RATE_LIMIT_MINUTES` is the minutes of the period of rate limiting. 
+- `MVPROXY_RATE_LIMIT_MAX` is the max of requests permitted in a period.
+- `MVPROXY_DENY_IPS_ENABLED` is a flag to block IP addresses.
+- `MVPROXY_DENY_IPS_VALUES` is the IP Address that will be blocked on the proxy.
+- `MVPROXY_DENY_ROUTES_ENABLED` is a flag to block the Tezos node's routes. 
+- `MVPROXY_DENY_ROUTES_VALUES` is the Tezos nodes routes that will be blocked on the proxy.conf.
+- `MVPROXY_ALLOW_ROUTES_ENABLED` is a flag to allow the Tezos node's routes. 
+- `MVPROXY_ALLOW_ROUTES_VALUES` is the Tezos nodes routes that will be allowed on the proxy.conf.
+- `MVPROXY_METRICS_ENABLED` is the flag to enable metrics.
+- `MVPROXY_METRICS_PPROF` is the flag to enable pprof.
+- `MVPROXY_METRICS_HOST` is the host of the prometheus metrics and pprof (if enabled).
+- `MVPROXY_CORS_ENABLED` is the flag to enable cors.
+- `MVPROXY_GZIP_ENABLED` is the flag to enable gzip.
+- `MVPROXY_GC_OPTIMIZE_MEMORY_STORE` is a flag to optimize GC when it's using storage as memory allocations instead of redis.
+- `MVPROXY_GC_PERCENT` is the percent of the garbage collector.
 

@@ -1,4 +1,4 @@
-module github.com/marigold-dev/tzproxy
+module github.com/mavryk-network/mvproxy
 
 go 1.21
 

@@ -44,7 +44,7 @@ jobs:
           # Only push if on main branch or version tag
           push: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')) }}
           tags: |
-            ghcr.io/marigold-dev/tzproxy:latest
-            ghcr.io/marigold-dev/tzproxy:latest-${{ steps.vars.outputs.sha_short }}-${{ steps.vars.outputs.date }}
-            ghcr.io/marigold-dev/tzproxy:${{env.RELEASE_VERSION}}
+            ghcr.io/mavryk-network/mvproxy:latest
+            ghcr.io/mavryk-network/mvproxy:latest-${{ steps.vars.outputs.sha_short }}-${{ steps.vars.outputs.date }}
+            ghcr.io/mavryk-network/mvproxy:${{env.RELEASE_VERSION}}
 

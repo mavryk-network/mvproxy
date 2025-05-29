@@ -6,7 +6,7 @@ on:
 
 jobs:
   releases-matrix:
-      name: Release TzProxy Binaries
+      name: Release MvProxy Binaries
       runs-on: ubuntu-latest
       strategy:
         matrix:
@@ -27,5 +27,5 @@ jobs:
           goarch: ${{ matrix.goarch }}
           goversion: "1.21.0"
           project_path: "."
-          binary_name: "tzproxy"
+          binary_name: "mvproxy"
           extra_files: LICENSE README.md

@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
-	"github.com/marigold-dev/tzproxy/config"
+	"github.com/mavryk-network/mvproxy/config"
 )
 
 // Compile the regular expression once and store it in a global variable

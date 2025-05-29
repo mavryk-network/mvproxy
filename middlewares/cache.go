@@ -7,7 +7,7 @@ import (
 
 	echocache "github.com/fraidev/go-echo-cache"
 	"github.com/labstack/echo/v4"
-	"github.com/marigold-dev/tzproxy/config"
+	"github.com/mavryk-network/mvproxy/config"
 )
 
 func Cache(config *config.Config) echo.MiddlewareFunc {

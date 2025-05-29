@@ -11,20 +11,20 @@ import (
 func initViper() *ConfigFile {
 
 	// Set the configuration file name and path
-	viper.SetConfigName("tzproxy")
+	viper.SetConfigName("mvproxy")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
 
-	// Check if the tzproxy.dev.yaml configuration file exists
-	if _, err := os.Stat("tzproxy.dev.yaml"); err == nil {
-		viper.SetConfigName("tzproxy.dev")
+	// Check if the mvproxy.dev.yaml configuration file exists
+	if _, err := os.Stat("mvproxy.dev.yaml"); err == nil {
+		viper.SetConfigName("mvproxy.dev")
 	}
 
 	// Read the configuration file
 	viper.ReadInConfig()
 
 	// Set the environment variables prefix
-	viper.SetEnvPrefix("TZPROXY")
+	viper.SetEnvPrefix("MVPROXY")
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 	viper.AutomaticEnv()
 	viper.SetTypeByDefaultValue(true)

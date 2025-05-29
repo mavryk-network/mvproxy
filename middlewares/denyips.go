@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/marigold-dev/tzproxy/config"
+	"github.com/mavryk-network/mvproxy/config"
 )
 
 func DenyIPs(config *config.Config) echo.MiddlewareFunc {
