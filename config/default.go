@@ -88,5 +88,8 @@ var defaultConfig = &ConfigFile{
 	},
 	CORS: CORS{
 		Enabled: true,
+		AllowHeaders: []string{"*"},
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{"*"},
 	},
 }

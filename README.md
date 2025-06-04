@@ -84,6 +84,14 @@ cache:
     ttl: 5
 cors:
     enabled: true
+    allow_headers:
+    - '*'
+    allow_origins:
+    - '*'
+    allow_methods:
+    - GET
+    - POST
+    - OPTIONS
 deny_ips:
     enabled: false
     values: []

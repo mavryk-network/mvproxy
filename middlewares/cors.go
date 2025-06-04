@@ -11,8 +11,8 @@ func CORS(config *config.Config) echo.MiddlewareFunc {
 		Skipper: func(c echo.Context) bool {
 			return !config.ConfigFile.CORS.Enabled
 		},
-		AllowHeaders: []string{"*"},
-		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"*"},
+		AllowHeaders: config.ConfigFile.CORS.AllowHeaders,
+		AllowOrigins: config.ConfigFile.CORS.AllowOrigins,
+		AllowMethods: config.ConfigFile.CORS.AllowMethods,
 	})
 }

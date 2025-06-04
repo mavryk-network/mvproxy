@@ -73,7 +73,10 @@ type GC struct {
 }
 
 type CORS struct {
-	Enabled bool `mapstructure:"enabled"`
+	Enabled      bool     `mapstructure:"enabled"`
+	AllowHeaders []string `mapstructure:"allow_headers"`
+	AllowOrigins []string `mapstructure:"allow_origins"`
+	AllowMethods []string `mapstructure:"allow_methods"`
 }
 
 type GZIP struct {
