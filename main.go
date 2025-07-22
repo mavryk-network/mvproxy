@@ -4,10 +4,13 @@ import (
 	"context"
 	"net/http"
 	"net/http/pprof"
+	"net"
+	"strings"
 	"os"
 	"os/signal"
 	"runtime/debug"
 	"time"
+	"log"
 
 	"github.com/fraidev/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
@@ -42,6 +45,38 @@ func main() {
 
 	// Start metrics server
 	startMetricsServer(config)
+
+	// Start dynamic DNS resolver for mavryk_host
+	go func() {
+		interval := 30 * time.Second
+		for {
+			var newTargets []*middleware.ProxyTarget
+			for _, host := range config.ConfigFile.MavrykHost {
+				if net.ParseIP(host) == nil && !strings.Contains(host, ":") {
+					// Host is a DNS name, resolve all A records
+					ips, err := net.LookupHost(host)
+					if err == nil {
+						for _, ip := range ips {
+							newTargets = append(newTargets, config.HostToTarget(ip+":8732")) // default port, adjust as needed
+						}
+					}
+				} else {
+					newTargets = append(newTargets, config.HostToTarget(host))
+				}
+			}
+			if len(newTargets) > 0 {
+				var urls []string
+				for _, t := range newTargets {
+					urls = append(urls, t.URL.String())
+				}
+				log.Printf("[mvproxy] Updating balancer targets: %v", urls)
+				if balancer, ok := config.ProxyConfig.Balancer.(interface{ SetTargets([]*middleware.ProxyTarget) }); ok {
+					balancer.SetTargets(newTargets)
+				}
+			}
+			time.Sleep(interval)
+		}
+	}()
 
 	// Start proxy
 	startProxyWithGracefulShutdown(e, config)

@@ -31,10 +31,10 @@ func NewConfig() *Config {
 	var targets = []*middleware.ProxyTarget{}
 	var retryTarget *middleware.ProxyTarget = nil
 	if configFile.MavrykHostRetry != "" {
-		retryTarget = hostToTarget(configFile.MavrykHostRetry)
+		retryTarget = HostToTarget(configFile.MavrykHostRetry)
 	}
 	for _, host := range configFile.MavrykHost {
-		targets = append(targets, hostToTarget(host))
+		targets = append(targets, HostToTarget(host))
 	}
 
 	var redisClient *redis.Client
@@ -171,7 +171,7 @@ func buildLogger(devMode bool) zerolog.Logger {
 	return log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
 
-func hostToTarget(host string) *middleware.ProxyTarget {
+func HostToTarget(host string) *middleware.ProxyTarget {
 	hostWithScheme := host
 	if !strings.Contains(host, "http") {
 		hostWithScheme = "http://" + host
@@ -180,6 +180,5 @@ func hostToTarget(host string) *middleware.ProxyTarget {
 	if err != nil {
 		log.Fatal().Err(err).Msg("unable to parse host")
 	}
-
 	return &middleware.ProxyTarget{URL: targetURL}
 }

@@ -53,6 +53,12 @@ func (b *ipHashBalancer) RemoveTarget(name string) bool {
 	return false
 }
 
+func (b *ipHashBalancer) SetTargets(targets []*middleware.ProxyTarget) {
+	b.mutex.Lock()
+	defer b.mutex.Unlock()
+	b.targets = targets
+}
+
 func (b *ipHashBalancer) Next(c echo.Context) *middleware.ProxyTarget {
 	b.mutex.Lock()
 	defer b.mutex.Unlock()
