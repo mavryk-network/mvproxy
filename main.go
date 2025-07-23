@@ -4,21 +4,24 @@ import (
 	"context"
 	"net/http"
 	"net/http/pprof"
+	"net"
+	"strings"
 	"os"
 	"os/signal"
 	"runtime/debug"
 	"time"
+	"log"
 
 	"github.com/fraidev/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/mavryk-network/mvproxy/config"
+	configpkg "github.com/mavryk-network/mvproxy/config"
 	"github.com/mavryk-network/mvproxy/middlewares"
 	"github.com/ziflex/lecho/v3"
 )
 
 func main() {
-	config := config.NewConfig()
+	config := configpkg.NewConfig()
 
 	debug.SetGCPercent(config.ConfigFile.GC.Percent)
 
@@ -43,11 +46,43 @@ func main() {
 	// Start metrics server
 	startMetricsServer(config)
 
+	// Start dynamic DNS resolver for mavryk_host
+	go func() {
+		interval := 30 * time.Second
+		for {
+			var newTargets []*middleware.ProxyTarget
+			for _, host := range config.ConfigFile.MavrykHost {
+				if net.ParseIP(host) == nil && !strings.Contains(host, ":") {
+					// Host is a DNS name, resolve all A records
+					ips, err := net.LookupHost(host)
+					if err == nil {
+						for _, ip := range ips {
+							newTargets = append(newTargets, configpkg.HostToTarget(ip+":8732")) // default port, adjust as needed
+						}
+					}
+				} else {
+					newTargets = append(newTargets, configpkg.HostToTarget(host))
+				}
+			}
+			if len(newTargets) > 0 {
+				var urls []string
+				for _, t := range newTargets {
+					urls = append(urls, t.URL.String())
+				}
+				log.Printf("[mvproxy] Updating balancer targets: %v", urls)
+				if balancer, ok := config.ProxyConfig.Balancer.(interface{ SetTargets([]*middleware.ProxyTarget) }); ok {
+					balancer.SetTargets(newTargets)
+				}
+			}
+			time.Sleep(interval)
+		}
+	}()
+
 	// Start proxy
 	startProxyWithGracefulShutdown(e, config)
 }
 
-func startMetricsServer(config *config.Config) {
+func startMetricsServer(config *configpkg.Config) {
 	if config.ConfigFile.Metrics.Enabled {
 		go func() {
 			metrics := echo.New()
@@ -72,7 +107,7 @@ func startMetricsServer(config *config.Config) {
 
 }
 
-func startProxyWithGracefulShutdown(e *echo.Echo, config *config.Config) {
+func startProxyWithGracefulShutdown(e *echo.Echo, config *configpkg.Config) {
 	go func() {
 		if err := e.Start(config.ConfigFile.Host); err != nil && err != http.ErrServerClosed {
 			e.Logger.Fatal("Shutting down the server")

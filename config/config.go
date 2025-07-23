@@ -30,11 +30,11 @@ func NewConfig() *Config {
 
 	var targets = []*middleware.ProxyTarget{}
 	var retryTarget *middleware.ProxyTarget = nil
-	if configFile.TezosHostRetry != "" {
-		retryTarget = hostToTarget(configFile.TezosHostRetry)
+	if configFile.MavrykHostRetry != "" {
+		retryTarget = HostToTarget(configFile.MavrykHostRetry)
 	}
-	for _, host := range configFile.TezosHost {
-		targets = append(targets, hostToTarget(host))
+	for _, host := range configFile.MavrykHost {
+		targets = append(targets, HostToTarget(host))
 	}
 
 	var redisClient *redis.Client
@@ -49,7 +49,7 @@ func NewConfig() *Config {
 	proxyConfig := middleware.ProxyConfig{
 		Skipper:    middleware.DefaultSkipper,
 		ContextKey: "target",
-		RetryCount: len(configFile.TezosHost) + 1,
+		RetryCount: len(configFile.MavrykHost) + 1,
 		Balancer:   balancer,
 		RetryFilter: func(c echo.Context, err error) bool {
 			if httpErr, ok := err.(*echo.HTTPError); ok {
@@ -171,7 +171,7 @@ func buildLogger(devMode bool) zerolog.Logger {
 	return log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
 
-func hostToTarget(host string) *middleware.ProxyTarget {
+func HostToTarget(host string) *middleware.ProxyTarget {
 	hostWithScheme := host
 	if !strings.Contains(host, "http") {
 		hostWithScheme = "http://" + host
@@ -180,6 +180,5 @@ func hostToTarget(host string) *middleware.ProxyTarget {
 	if err != nil {
 		log.Fatal().Err(err).Msg("unable to parse host")
 	}
-
 	return &middleware.ProxyTarget{URL: targetURL}
 }
