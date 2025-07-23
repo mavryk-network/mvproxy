@@ -15,13 +15,13 @@ import (
 	"github.com/fraidev/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/mavryk-network/mvproxy/config"
+	configpkg "github.com/mavryk-network/mvproxy/config"
 	"github.com/mavryk-network/mvproxy/middlewares"
 	"github.com/ziflex/lecho/v3"
 )
 
 func main() {
-	config := config.NewConfig()
+	config := configpkg.NewConfig()
 
 	debug.SetGCPercent(config.ConfigFile.GC.Percent)
 
@@ -57,11 +57,11 @@ func main() {
 					ips, err := net.LookupHost(host)
 					if err == nil {
 						for _, ip := range ips {
-							newTargets = append(newTargets, config.HostToTarget(ip+":8732")) // default port, adjust as needed
+							newTargets = append(newTargets, configpkg.HostToTarget(ip+":8732")) // default port, adjust as needed
 						}
 					}
 				} else {
-					newTargets = append(newTargets, config.HostToTarget(host))
+					newTargets = append(newTargets, configpkg.HostToTarget(host))
 				}
 			}
 			if len(newTargets) > 0 {
@@ -82,7 +82,7 @@ func main() {
 	startProxyWithGracefulShutdown(e, config)
 }
 
-func startMetricsServer(config *config.Config) {
+func startMetricsServer(config *configpkg.Config) {
 	if config.ConfigFile.Metrics.Enabled {
 		go func() {
 			metrics := echo.New()
@@ -107,7 +107,7 @@ func startMetricsServer(config *config.Config) {
 
 }
 
-func startProxyWithGracefulShutdown(e *echo.Echo, config *config.Config) {
+func startProxyWithGracefulShutdown(e *echo.Echo, config *configpkg.Config) {
 	go func() {
 		if err := e.Start(config.ConfigFile.Host); err != nil && err != http.ErrServerClosed {
 			e.Logger.Fatal("Shutting down the server")
