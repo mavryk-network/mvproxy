@@ -18,7 +18,10 @@ func RateLimit(config *config.Config) echo.MiddlewareFunc {
 		var err error
 		store, err = redis.NewStore(config.Redis)
 		if err != nil {
-			log.Fatal(err)
+			// Exiting here crash-looped the proxy whenever redis or cluster DNS
+			// was briefly unreachable at startup; rate limit per process instead.
+			log.Printf("[mvproxy] rate limiter: redis store unavailable (%v), using in-memory store", err)
+			store = memory.NewStore()
 		}
 	} else {
 		store = memory.NewStore()

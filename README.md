@@ -21,7 +21,7 @@ Make sure that your Mavryk Node is running and set its host address in the `mavr
 If you want to test only MvProxy without a real Mavryk Node, you can simulate a Mavryk Node with our `flextesa.sh` script. Make sure that you have a docker.
 
 ```bash
-./flextesa.sh
+./flexmasa.sh
 ```
 
 If you want custom configurations, create a file named as `mvproxy.yaml` in the same directory of the binary. This file will be created if you don't create it.

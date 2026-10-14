@@ -40,6 +40,7 @@ func main() {
 	e.Use(middlewares.DenyRoutes(config))
 	e.Use(middlewares.Cache(config))
 	e.Use(middlewares.Gzip(config))
+	e.Use(middlewares.ReleaseBalancerTargets(config))
 	e.Use(middlewares.Retry(config))
 	e.Use(middleware.ProxyWithConfig(*config.ProxyConfig))
 
